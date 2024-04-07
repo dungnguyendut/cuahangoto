@@ -1,0 +1,916 @@
+USE [master]
+GO
+/****** Object:  Database [CuaHangOto]    Script Date: 4/7/2024 11:09:39 PM ******/
+CREATE DATABASE [CuaHangOto]
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [CuaHangOto] SET COMPATIBILITY_LEVEL = 160
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [CuaHangOto].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [CuaHangOto] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [CuaHangOto] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [CuaHangOto] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [CuaHangOto] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [CuaHangOto] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET RECOVERY FULL 
+GO
+ALTER DATABASE [CuaHangOto] SET  MULTI_USER 
+GO
+ALTER DATABASE [CuaHangOto] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [CuaHangOto] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [CuaHangOto] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [CuaHangOto] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [CuaHangOto] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [CuaHangOto] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'CuaHangOto', N'ON'
+GO
+ALTER DATABASE [CuaHangOto] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [CuaHangOto] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [CuaHangOto]
+GO
+/****** Object:  Table [dbo].[DICHVUBAOHANH]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DICHVUBAOHANH](
+	[IDDichVuBaoHanh] [nvarchar](50) NOT NULL,
+	[IDXe] [nvarchar](50) NULL,
+	[IDBaoHiem] [nvarchar](50) NULL,
+	[TenDichVuBaoHanh] [nvarchar](50) NOT NULL,
+	[PhuTungBaoHanh] [nvarchar](50) NOT NULL,
+	[IDPhuTung] [nvarchar](50) NULL,
+ CONSTRAINT [PK_DICHVUBAOHANH] PRIMARY KEY CLUSTERED 
+(
+	[IDDichVuBaoHanh] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[XEOTO]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[XEOTO](
+	[IDXe] [nvarchar](50) NOT NULL,
+	[TenXe] [nvarchar](50) NOT NULL,
+	[NamSanXuat] [nvarchar](50) NULL,
+	[MauXe] [nvarchar](50) NULL,
+	[GiaXe] [nvarchar](12) NOT NULL,
+	[IDKhachHang] [nvarchar](50) NULL,
+ CONSTRAINT [PK_XEOTO] PRIMARY KEY CLUSTERED 
+(
+	[IDXe] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[BAOHIEM]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[BAOHIEM](
+	[IDBaoHiem] [nvarchar](50) NOT NULL,
+	[IDDichVu] [nvarchar](50) NULL,
+	[TenBaoHiem] [nvarchar](50) NOT NULL,
+	[DieuKhoanBaoHiem] [nvarchar](50) NULL,
+	[ChiPhiBaoHiem] [nvarchar](50) NULL,
+	[IDXe] [nvarchar](50) NULL,
+ CONSTRAINT [PK_BAOHIEM] PRIMARY KEY CLUSTERED 
+(
+	[IDBaoHiem] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  View [dbo].[ViewCacMauXeDuocChon]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[ViewCacMauXeDuocChon]
+AS
+SELECT x.TenXe AS XEOTO_TenXe, x.GiaXe AS XEOTO_GiaXe, x.NamSanXuat AS XEOTO_NawmSanXuat, d.TenDichVuBaoHanh AS DICHVUBAOHANH_TenDichVuBaoHanh, b.TenBaoHiem AS BAOHIEM_TenBaoHiem
+FROM     dbo.XEOTO AS x INNER JOIN
+                  dbo.DICHVUBAOHANH AS d ON x.IDXe = d.IDXe INNER JOIN
+                  dbo.BAOHIEM AS b ON x.IDXe = b.IDXe
+WHERE  (x.GiaXe > 90000) AND (x.GiaXe < 150000) AND (x.NamSanXuat >= '2018-01-01')
+GO
+/****** Object:  Table [dbo].[KHACHHANG]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[KHACHHANG](
+	[IDKhachHang] [nvarchar](50) NOT NULL,
+	[TenKhachHang] [nvarchar](50) NOT NULL,
+	[SDTKhachHang] [nvarchar](50) NULL,
+ CONSTRAINT [PK_KHACHHANG] PRIMARY KEY CLUSTERED 
+(
+	[IDKhachHang] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[HOADON]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HOADON](
+	[IDHoaDon] [nvarchar](50) NOT NULL,
+	[NgayLap] [date] NOT NULL,
+	[ThanhTien] [float] NOT NULL,
+	[IDXe] [nvarchar](50) NULL,
+	[IDDichVuBaoHanh] [nvarchar](50) NULL,
+	[IDDichVuSale] [nvarchar](50) NULL,
+	[IDBaoHiem] [nvarchar](50) NULL,
+	[IDKhachHang] [nvarchar](50) NULL,
+ CONSTRAINT [PK_HOADON] PRIMARY KEY CLUSTERED 
+(
+	[IDHoaDon] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  UserDefinedFunction [dbo].[KhachHangMuaXe]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[KhachHangMuaXe] (@IDKHMX nvarchar(30))
+RETURNS TABLE AS
+RETURN
+SELECT  KHACHHANG.IDKhachHang, KHACHHANG.TenKhachHang, XEOTO.IDXe, XEOTO.TenXe, HOADON.ThanhTien, HOADON.IDHoaDon 
+FROM HOADON
+INNER JOIN KHACHHANG ON KHACHHANG.IDKhachHang = HOADON.IDKhachHang 
+INNER JOIN XEOTO ON XEOTO.IDXe = HOADON.IDXe 
+WHERE HOADON.IDHoaDon = @IDKHMX AND HOADON.ThanhTien > 70000
+GO
+/****** Object:  UserDefinedFunction [dbo].[HoaDonMAX]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[HoaDonMAX] (@MaHDM nvarchar(50))
+RETURNS TABLE AS
+RETURN
+SELECT  KHACHHANG.IDKhachHang, KHACHHANG.TenKhachHang, XEOTO.IDXe, XEOTO.TenXe, HOADON.ThanhTien, HOADON.IDHoaDon 
+FROM HOADON
+INNER JOIN KHACHHANG ON KHACHHANG.IDKhachHang = HOADON.IDKhachHang 
+INNER JOIN XEOTO ON XEOTO.IDXe = HOADON.IDXe 
+WHERE HOADON.IDHoaDon = @MaHDM AND HOADON.ThanhTien = (SELECT MAX(ThanhTien) FROM HOADON WHERE IDHoaDon = @MaHDM)
+GO
+/****** Object:  UserDefinedFunction [dbo].[HoaDonCaoNhat]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[HoaDonCaoNhat] (@MaHDM nvarchar(50))
+RETURNS TABLE AS
+RETURN
+SELECT  KHACHHANG.IDKhachHang, KHACHHANG.TenKhachHang, XEOTO.IDXe, XEOTO.TenXe, HOADON.ThanhTien, HOADON.IDHoaDon 
+FROM HOADON
+INNER JOIN KHACHHANG ON KHACHHANG.IDKhachHang = HOADON.IDKhachHang 
+INNER JOIN XEOTO ON XEOTO.IDXe = HOADON.IDXe 
+WHERE XEOTO.IDXe = @MaHDM AND HOADON.ThanhTien = (SELECT MAX(ThanhTien) FROM HOADON WHERE IDXe = @MaHDM)
+GO
+/****** Object:  UserDefinedFunction [dbo].[MAXTHANHTIEN]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[MAXTHANHTIEN] (@MaIDXe nvarchar(50))
+RETURNS TABLE AS
+RETURN
+SELECT  KHACHHANG.IDKhachHang, KHACHHANG.TenKhachHang, XEOTO.IDXe, XEOTO.TenXe, HOADON.ThanhTien, HOADON.IDHoaDon 
+FROM HOADON
+INNER JOIN KHACHHANG ON KHACHHANG.IDKhachHang = HOADON.IDKhachHang 
+INNER JOIN XEOTO ON XEOTO.IDXe = HOADON.IDXe 
+WHERE XEOTO.IDXe = @MaIDXe 
+AND HOADON.ThanhTien = (SELECT MAX(ThanhTien) FROM HOADON WHERE IDXe = @MaIDXe)
+GO
+/****** Object:  UserDefinedFunction [dbo].[MINTHANHTIEN]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[MINTHANHTIEN] (@MaIDXe nvarchar(50))
+RETURNS TABLE AS
+RETURN
+SELECT  KHACHHANG.IDKhachHang, KHACHHANG.TenKhachHang, XEOTO.IDXe, XEOTO.TenXe, HOADON.ThanhTien, HOADON.IDHoaDon 
+FROM HOADON
+INNER JOIN KHACHHANG ON KHACHHANG.IDKhachHang = HOADON.IDKhachHang 
+INNER JOIN XEOTO ON XEOTO.IDXe = HOADON.IDXe 
+WHERE XEOTO.IDXe = @MaIDXe 
+AND HOADON.ThanhTien = (SELECT Min(ThanhTien) FROM HOADON WHERE IDXe = @MaIDXe)
+GO
+/****** Object:  UserDefinedFunction [dbo].[ThanhTienCaoNhat]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[ThanhTienCaoNhat] (@MaIDXe nvarchar(50))
+RETURNS TABLE AS
+RETURN
+SELECT  KHACHHANG.IDKhachHang, KHACHHANG.TenKhachHang, XEOTO.IDXe, XEOTO.TenXe, HOADON.ThanhTien, HOADON.IDHoaDon 
+FROM HOADON
+INNER JOIN KHACHHANG ON KHACHHANG.IDKhachHang = HOADON.IDKhachHang 
+INNER JOIN XEOTO ON XEOTO.IDXe = HOADON.IDXe 
+WHERE XEOTO.IDXe = @MaIDXe 
+AND HOADON.ThanhTien = (SELECT Min(ThanhTien) FROM HOADON WHERE IDXe = @MaIDXe)
+GO
+/****** Object:  UserDefinedFunction [dbo].[ThanhTienTrungBinh]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[ThanhTienTrungBinh] (@MaIDXe float)
+RETURNS TABLE AS
+RETURN
+SELECT  KHACHHANG.IDKhachHang, KHACHHANG.TenKhachHang, XEOTO.IDXe, XEOTO.TenXe, HOADON.ThanhTien, HOADON.IDHoaDon 
+FROM HOADON
+INNER JOIN KHACHHANG ON KHACHHANG.IDKhachHang = HOADON.IDKhachHang 
+INNER JOIN XEOTO ON XEOTO.IDXe = HOADON.IDXe 
+WHERE XEOTO.IDXe = @MaIDXe 
+AND HOADON.ThanhTien = (SELECT avg(ThanhTien) as 'Thành tiền trung bình' FROM HOADON WHERE IDXe = @MaIDXe) 
+GO
+/****** Object:  UserDefinedFunction [dbo].[TTTB]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[TTTB] (@MaIDXe nvarchar(50))
+RETURNS TABLE AS
+RETURN
+SELECT  KHACHHANG.IDKhachHang, KHACHHANG.TenKhachHang, XEOTO.IDXe, XEOTO.TenXe, HOADON.ThanhTien, HOADON.IDHoaDon 
+FROM HOADON
+INNER JOIN KHACHHANG ON KHACHHANG.IDKhachHang = HOADON.IDKhachHang 
+INNER JOIN XEOTO ON XEOTO.IDXe = HOADON.IDXe 
+WHERE XEOTO.IDXe = @MaIDXe 
+AND HOADON.ThanhTien = (SELECT avg(ThanhTien) as 'Thành tiền trung bình' FROM HOADON WHERE IDXe = @MaIDXe) 
+GO
+/****** Object:  UserDefinedFunction [dbo].[TTCN]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[TTCN] (@MaIDXe nvarchar(50))
+RETURNS TABLE AS
+RETURN
+SELECT  KHACHHANG.IDKhachHang, KHACHHANG.TenKhachHang, XEOTO.IDXe, XEOTO.TenXe, HOADON.ThanhTien, HOADON.IDHoaDon 
+FROM HOADON
+INNER JOIN KHACHHANG ON KHACHHANG.IDKhachHang = HOADON.IDKhachHang 
+INNER JOIN XEOTO ON XEOTO.IDXe = HOADON.IDXe 
+WHERE XEOTO.IDXe = @MaIDXe 
+AND HOADON.ThanhTien = (SELECT MAX(ThanhTien) FROM HOADON WHERE IDXe = @MaIDXe)
+GO
+/****** Object:  UserDefinedFunction [dbo].[TTTN]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[TTTN] (@MaIDXe nvarchar(50))
+RETURNS TABLE AS
+RETURN
+SELECT  KHACHHANG.IDKhachHang, KHACHHANG.TenKhachHang, XEOTO.IDXe, XEOTO.TenXe, HOADON.ThanhTien, HOADON.IDHoaDon 
+FROM HOADON
+INNER JOIN KHACHHANG ON KHACHHANG.IDKhachHang = HOADON.IDKhachHang 
+INNER JOIN XEOTO ON XEOTO.IDXe = HOADON.IDXe 
+WHERE XEOTO.IDXe = @MaIDXe 
+AND HOADON.ThanhTien = (SELECT Min(ThanhTien) FROM HOADON WHERE IDXe = @MaIDXe)
+GO
+/****** Object:  Table [dbo].[KHOXE]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[KHOXE](
+	[IDKhoXe] [nvarchar](50) NOT NULL,
+	[SoLuongXe] [nvarchar](12) NOT NULL,
+	[IDXe] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  View [dbo].[ViewDanhSachSoLuongXeTren7]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--VIEW
+--view1: xem danh sách các xe trong kho xe có số lượng trên 7 xe
+CREATE VIEW [dbo].[ViewDanhSachSoLuongXeTren7] AS
+SELECT KHOXE.IDXe, khoxe.SoLuongXe
+FROM KHOXE
+WHERE KHOXE.SoLuongXe > 7;
+--view2:
+GO
+/****** Object:  View [dbo].[ViewXeGiaTu80000den130000]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[ViewXeGiaTu80000den130000] AS
+SELECT *
+FROM XEOTO 
+WHERE GiaXe > 80000 AND GiaXe < 130000;
+GO
+/****** Object:  Table [dbo].[NHACUNGCAP]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NHACUNGCAP](
+	[IDNhaCungCap] [nvarchar](50) NOT NULL,
+	[IDPhuTung] [nvarchar](50) NULL,
+	[TenNhaCungCap] [nvarchar](50) NOT NULL,
+	[SDTNhaCungCap] [nvarchar](12) NULL,
+	[EmailNhaCungCap] [nvarchar](50) NULL,
+	[PhuTungCungCap] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_NHACUNGCAP] PRIMARY KEY CLUSTERED 
+(
+	[IDNhaCungCap] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PHUTUNG]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PHUTUNG](
+	[IDPhuTung] [nvarchar](50) NOT NULL,
+	[IDNhaCungCap] [nvarchar](50) NOT NULL,
+	[TenPhuTung] [nvarchar](50) NOT NULL,
+	[ModelTuongThich] [nvarchar](50) NULL,
+	[GiaPhuTung] [nvarchar](12) NULL,
+	[SoLuong] [nvarchar](12) NULL,
+ CONSTRAINT [PK_PHUTUNG] PRIMARY KEY CLUSTERED 
+(
+	[IDPhuTung] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  View [dbo].[ViewPhuTungVaNhaCungCap]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[ViewPhuTungVaNhaCungCap] AS
+SELECT p.IDPhuTung AS PHUTUNG_IDPhuTung, p.TenPhuTung AS PHUTUNG_TenPhuTung, n.IDNhaCungCap AS NHACUNGCAP_IDNhaCUngCap, n.TenNhaCungCap AS NHACUNGCAP_TenNhaCungCap
+FROM PHUTUNG p
+JOIN NHACUNGCAP n ON p.IDNhaCUngCap = n.IDNhaCUngCap;
+GO
+/****** Object:  Table [dbo].[CUAHANG]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CUAHANG](
+	[IDCuaHang] [nvarchar](50) NOT NULL,
+	[TenCuaHang] [nvarchar](50) NOT NULL,
+	[DiaChiCuaHang] [nvarchar](50) NOT NULL,
+	[SDTCuaHang] [nvarchar](12) NULL,
+	[IDKhacHang] [nvarchar](50) NULL,
+ CONSTRAINT [PK_CUAHANG] PRIMARY KEY CLUSTERED 
+(
+	[IDCuaHang] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DICHVUSALE]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DICHVUSALE](
+	[IDDichVuSale] [nvarchar](50) NOT NULL,
+	[TenDichVuSale] [nvarchar](50) NOT NULL,
+	[GiaSauSale] [nvarchar](50) NOT NULL,
+	[IDXe] [nvarchar](50) NULL,
+ CONSTRAINT [PK_DICHVUSALE] PRIMARY KEY CLUSTERED 
+(
+	[IDDichVuSale] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[LUONG]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LUONG](
+	[IDL] [nvarchar](50) NOT NULL,
+	[HeSoL] [nvarchar](12) NOT NULL,
+	[HeSoPhuCap] [nvarchar](12) NOT NULL,
+	[Thuong] [nvarchar](12) NOT NULL,
+	[IDNhanVien] [nvarchar](50) NULL,
+	[IDQuanLy] [nvarchar](50) NULL,
+ CONSTRAINT [PK_LUONG] PRIMARY KEY CLUSTERED 
+(
+	[IDL] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[NHANVIEN]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NHANVIEN](
+	[IDNhanVien] [nvarchar](50) NOT NULL,
+	[TenNhanVien] [nvarchar](50) NOT NULL,
+	[ViTriCongViec] [nvarchar](50) NOT NULL,
+	[SDTNhanVien] [nvarchar](12) NULL,
+	[DiaChiNhanVien] [nvarchar](50) NULL,
+	[IDKhachHang] [nvarchar](50) NULL,
+	[IDCuaHang] [nvarchar](50) NULL,
+ CONSTRAINT [PK_NHANVIEN] PRIMARY KEY CLUSTERED 
+(
+	[IDNhanVien] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PHONGBAN]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PHONGBAN](
+	[IDPhongBan] [nvarchar](50) NOT NULL,
+	[CongViecPhongBan] [nvarchar](50) NOT NULL,
+	[IDNhanVien] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[QUANLY]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[QUANLY](
+	[IDQuanLy] [nvarchar](50) NOT NULL,
+	[TenQuanLy] [nvarchar](50) NOT NULL,
+	[SDTQuanLy] [nvarchar](12) NULL,
+	[IDCuaHang] [nvarchar](50) NOT NULL,
+	[IDNhanVien] [nvarchar](50) NULL,
+ CONSTRAINT [PK_QUANLY] PRIMARY KEY CLUSTERED 
+(
+	[IDQuanLy] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[XE_audit]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[XE_audit](
+	[IDXe] [nvarchar](50) NULL,
+	[TenXe] [nvarchar](50) NULL,
+	[NamSanXuat] [nvarchar](50) NULL,
+	[MauXe] [nvarchar](50) NULL,
+	[GiaXe] [nvarchar](12) NULL,
+	[IDKhachHang] [nvarchar](50) NULL
+) ON [PRIMARY]
+GO
+INSERT [dbo].[BAOHIEM] ([IDBaoHiem], [IDDichVu], [TenBaoHiem], [DieuKhoanBaoHiem], [ChiPhiBaoHiem], [IDXe]) VALUES (N'BH1', NULL, N'Tai nạn nhẹ', NULL, NULL, N'X1')
+INSERT [dbo].[BAOHIEM] ([IDBaoHiem], [IDDichVu], [TenBaoHiem], [DieuKhoanBaoHiem], [ChiPhiBaoHiem], [IDXe]) VALUES (N'BH2', NULL, N'Tai nạn nặng', NULL, NULL, N'X3')
+GO
+INSERT [dbo].[CUAHANG] ([IDCuaHang], [TenCuaHang], [DiaChiCuaHang], [SDTCuaHang], [IDKhacHang]) VALUES (N'CH1', N'Cửa hàng toyota', N'99 hồ đắc di', N'01597532486', N'KH1')
+INSERT [dbo].[CUAHANG] ([IDCuaHang], [TenCuaHang], [DiaChiCuaHang], [SDTCuaHang], [IDKhacHang]) VALUES (N'CH2', N'Cửa hàng toyota huế', N'lô C phú mỹ an', N'0159732684', NULL)
+GO
+INSERT [dbo].[DICHVUBAOHANH] ([IDDichVuBaoHanh], [IDXe], [IDBaoHiem], [TenDichVuBaoHanh], [PhuTungBaoHanh], [IDPhuTung]) VALUES (N'DVBH1', N'X1', N'BH1', N'Bảo hành 50%', N'sơn, lốp, kính', NULL)
+INSERT [dbo].[DICHVUBAOHANH] ([IDDichVuBaoHanh], [IDXe], [IDBaoHiem], [TenDichVuBaoHanh], [PhuTungBaoHanh], [IDPhuTung]) VALUES (N'DVBH2', N'X1', N'BH2', N'Bảo hành 100%', N'phuộc, động cơ', NULL)
+GO
+INSERT [dbo].[DICHVUSALE] ([IDDichVuSale], [TenDichVuSale], [GiaSauSale], [IDXe]) VALUES (N'DVS1', N'Sale 20%', N'giá gốc - (20%x giá gốc)', N'X1')
+INSERT [dbo].[DICHVUSALE] ([IDDichVuSale], [TenDichVuSale], [GiaSauSale], [IDXe]) VALUES (N'DVS2', N'Sale 50%', N'giá gốc - (50%x giá gốc)', N'X4')
+INSERT [dbo].[DICHVUSALE] ([IDDichVuSale], [TenDichVuSale], [GiaSauSale], [IDXe]) VALUES (N'DVS3', N'Sale 75%', N'giá gốc - (75%x gái gốc)', N'X3')
+GO
+INSERT [dbo].[HOADON] ([IDHoaDon], [NgayLap], [ThanhTien], [IDXe], [IDDichVuBaoHanh], [IDDichVuSale], [IDBaoHiem], [IDKhachHang]) VALUES (N'HD1', CAST(N'2023-01-01' AS Date), 75000, N'X2', N'DVBH2', N'DVS1', NULL, N'KH1')
+INSERT [dbo].[HOADON] ([IDHoaDon], [NgayLap], [ThanhTien], [IDXe], [IDDichVuBaoHanh], [IDDichVuSale], [IDBaoHiem], [IDKhachHang]) VALUES (N'HD2', CAST(N'2024-01-01' AS Date), 120000, N'X3', N'DVBH1', NULL, NULL, N'KH2')
+INSERT [dbo].[HOADON] ([IDHoaDon], [NgayLap], [ThanhTien], [IDXe], [IDDichVuBaoHanh], [IDDichVuSale], [IDBaoHiem], [IDKhachHang]) VALUES (N'HD3', CAST(N'2024-02-02' AS Date), 135000, N'X2', N'DVBH1', N'DVS2', NULL, N'KH3')
+INSERT [dbo].[HOADON] ([IDHoaDon], [NgayLap], [ThanhTien], [IDXe], [IDDichVuBaoHanh], [IDDichVuSale], [IDBaoHiem], [IDKhachHang]) VALUES (N'HD4', CAST(N'2024-03-02' AS Date), 90000, N'X1', NULL, N'DVS1', NULL, N'KH4')
+INSERT [dbo].[HOADON] ([IDHoaDon], [NgayLap], [ThanhTien], [IDXe], [IDDichVuBaoHanh], [IDDichVuSale], [IDBaoHiem], [IDKhachHang]) VALUES (N'HD5', CAST(N'2024-05-03' AS Date), 100000, N'X5', N'DVBH1', NULL, NULL, N'KH5')
+GO
+INSERT [dbo].[KHACHHANG] ([IDKhachHang], [TenKhachHang], [SDTKhachHang]) VALUES (N'KH1', N'Khách hàng 1', N'0912267786')
+INSERT [dbo].[KHACHHANG] ([IDKhachHang], [TenKhachHang], [SDTKhachHang]) VALUES (N'KH2', N'Khách hàng 2', N'0123456789')
+INSERT [dbo].[KHACHHANG] ([IDKhachHang], [TenKhachHang], [SDTKhachHang]) VALUES (N'KH3', N'Khách hàng 3', N'0316247985')
+INSERT [dbo].[KHACHHANG] ([IDKhachHang], [TenKhachHang], [SDTKhachHang]) VALUES (N'KH4', N'Khách hàng 4', N'1654328970')
+INSERT [dbo].[KHACHHANG] ([IDKhachHang], [TenKhachHang], [SDTKhachHang]) VALUES (N'KH5', N'Khách hàng 5', N'0948014143')
+GO
+INSERT [dbo].[KHOXE] ([IDKhoXe], [SoLuongXe], [IDXe]) VALUES (N'K1', N'10', N'X1')
+INSERT [dbo].[KHOXE] ([IDKhoXe], [SoLuongXe], [IDXe]) VALUES (N'K2', N'12', N'X2')
+INSERT [dbo].[KHOXE] ([IDKhoXe], [SoLuongXe], [IDXe]) VALUES (N'K3', N'7', N'X3')
+INSERT [dbo].[KHOXE] ([IDKhoXe], [SoLuongXe], [IDXe]) VALUES (N'K4', N'5', N'X4')
+INSERT [dbo].[KHOXE] ([IDKhoXe], [SoLuongXe], [IDXe]) VALUES (N'K5', N'17', N'X5')
+GO
+INSERT [dbo].[LUONG] ([IDL], [HeSoL], [HeSoPhuCap], [Thuong], [IDNhanVien], [IDQuanLy]) VALUES (N'L1', N'5000', N'50', N'100', NULL, NULL)
+INSERT [dbo].[LUONG] ([IDL], [HeSoL], [HeSoPhuCap], [Thuong], [IDNhanVien], [IDQuanLy]) VALUES (N'L2', N'7000', N'50', N'300', NULL, NULL)
+GO
+INSERT [dbo].[NHACUNGCAP] ([IDNhaCungCap], [IDPhuTung], [TenNhaCungCap], [SDTNhaCungCap], [EmailNhaCungCap], [PhuTungCungCap]) VALUES (N'NCC1', NULL, N'Nhà cung cấp động cơ', NULL, NULL, N'động cơ')
+INSERT [dbo].[NHACUNGCAP] ([IDNhaCungCap], [IDPhuTung], [TenNhaCungCap], [SDTNhaCungCap], [EmailNhaCungCap], [PhuTungCungCap]) VALUES (N'NCC2', NULL, N'Nhà cung cấp lốp', NULL, NULL, N'lốp')
+INSERT [dbo].[NHACUNGCAP] ([IDNhaCungCap], [IDPhuTung], [TenNhaCungCap], [SDTNhaCungCap], [EmailNhaCungCap], [PhuTungCungCap]) VALUES (N'NCC3', NULL, N'Nhà cung cấp sơn', NULL, NULL, N'sơn')
+INSERT [dbo].[NHACUNGCAP] ([IDNhaCungCap], [IDPhuTung], [TenNhaCungCap], [SDTNhaCungCap], [EmailNhaCungCap], [PhuTungCungCap]) VALUES (N'NCC4', NULL, N'Nhà cung cấp phuộc', NULL, NULL, N'phuộc')
+INSERT [dbo].[NHACUNGCAP] ([IDNhaCungCap], [IDPhuTung], [TenNhaCungCap], [SDTNhaCungCap], [EmailNhaCungCap], [PhuTungCungCap]) VALUES (N'NCC5', NULL, N'Nhà cung cấp kính', NULL, NULL, N'kính')
+GO
+INSERT [dbo].[NHANVIEN] ([IDNhanVien], [TenNhanVien], [ViTriCongViec], [SDTNhanVien], [DiaChiNhanVien], [IDKhachHang], [IDCuaHang]) VALUES (N'NV1', N'Nguyễn Tuấn Dũng', N'Kỹ thuật', N'0321654987', NULL, NULL, NULL)
+INSERT [dbo].[NHANVIEN] ([IDNhanVien], [TenNhanVien], [ViTriCongViec], [SDTNhanVien], [DiaChiNhanVien], [IDKhachHang], [IDCuaHang]) VALUES (N'NV2', N'Cao Thị Hảo Vy', N'Tư vấn', N'0123456789', NULL, NULL, NULL)
+INSERT [dbo].[NHANVIEN] ([IDNhanVien], [TenNhanVien], [ViTriCongViec], [SDTNhanVien], [DiaChiNhanVien], [IDKhachHang], [IDCuaHang]) VALUES (N'NV3', N'Phạm Văn Sỹ', N'Bán hàng', N'0147258369', NULL, NULL, NULL)
+INSERT [dbo].[NHANVIEN] ([IDNhanVien], [TenNhanVien], [ViTriCongViec], [SDTNhanVien], [DiaChiNhanVien], [IDKhachHang], [IDCuaHang]) VALUES (N'NV4', N'Hoàng Thu Quỳnh', N'Bán Hàng', N'0741852963', NULL, NULL, NULL)
+GO
+INSERT [dbo].[PHONGBAN] ([IDPhongBan], [CongViecPhongBan], [IDNhanVien]) VALUES (N'PB1', N'Kỹ thuật', N'NV1')
+INSERT [dbo].[PHONGBAN] ([IDPhongBan], [CongViecPhongBan], [IDNhanVien]) VALUES (N'PB2', N'Tư vấn', N'NV2')
+INSERT [dbo].[PHONGBAN] ([IDPhongBan], [CongViecPhongBan], [IDNhanVien]) VALUES (N'PB3', N'Bán hàng', N'NV3')
+GO
+INSERT [dbo].[PHUTUNG] ([IDPhuTung], [IDNhaCungCap], [TenPhuTung], [ModelTuongThich], [GiaPhuTung], [SoLuong]) VALUES (N'PT1', N'NCC1', N'động cơ', N'động cơ v8', NULL, NULL)
+INSERT [dbo].[PHUTUNG] ([IDPhuTung], [IDNhaCungCap], [TenPhuTung], [ModelTuongThich], [GiaPhuTung], [SoLuong]) VALUES (N'PT2', N'NCC2', N'lốp', N'mâm 17inch', NULL, NULL)
+INSERT [dbo].[PHUTUNG] ([IDPhuTung], [IDNhaCungCap], [TenPhuTung], [ModelTuongThich], [GiaPhuTung], [SoLuong]) VALUES (N'PT3', N'NCC3', N'sơn', N'có lót sơn nền', NULL, NULL)
+INSERT [dbo].[PHUTUNG] ([IDPhuTung], [IDNhaCungCap], [TenPhuTung], [ModelTuongThich], [GiaPhuTung], [SoLuong]) VALUES (N'PT4', N'NCC4', N'phuộc', N'tương thích dòng onliin', NULL, NULL)
+INSERT [dbo].[PHUTUNG] ([IDPhuTung], [IDNhaCungCap], [TenPhuTung], [ModelTuongThich], [GiaPhuTung], [SoLuong]) VALUES (N'PT5', N'NCC5', N'kính', N'chống tia uv', NULL, NULL)
+GO
+INSERT [dbo].[QUANLY] ([IDQuanLy], [TenQuanLy], [SDTQuanLy], [IDCuaHang], [IDNhanVien]) VALUES (N'QL1', N'Hoàng Hữu Trung', NULL, N'CH1', NULL)
+INSERT [dbo].[QUANLY] ([IDQuanLy], [TenQuanLy], [SDTQuanLy], [IDCuaHang], [IDNhanVien]) VALUES (N'QL2', N'Nguyễn Than Tuấn', NULL, N'CH2', NULL)
+GO
+INSERT [dbo].[XE_audit] ([IDXe], [TenXe], [NamSanXuat], [MauXe], [GiaXe], [IDKhachHang]) VALUES (N'X1', N'Toyota Corolla Altis', N'2023-01-05', N'Trắng', N'100000', NULL)
+GO
+INSERT [dbo].[XEOTO] ([IDXe], [TenXe], [NamSanXuat], [MauXe], [GiaXe], [IDKhachHang]) VALUES (N'X1', N'Toyota Corolla Altis', N'2023-01-05', N'Trắng', N'170000', NULL)
+INSERT [dbo].[XEOTO] ([IDXe], [TenXe], [NamSanXuat], [MauXe], [GiaXe], [IDKhachHang]) VALUES (N'X2', N'Toyota Camry', N'2019-03-23', N'Đen', N'100000', NULL)
+INSERT [dbo].[XEOTO] ([IDXe], [TenXe], [NamSanXuat], [MauXe], [GiaXe], [IDKhachHang]) VALUES (N'X3', N'Toyota Fortuner', N'2020-10-12', N'Nâu', N'120000', NULL)
+INSERT [dbo].[XEOTO] ([IDXe], [TenXe], [NamSanXuat], [MauXe], [GiaXe], [IDKhachHang]) VALUES (N'X4', N'Toyota Yaris', N'2023-06-16', N'Trắng', N'90000', NULL)
+INSERT [dbo].[XEOTO] ([IDXe], [TenXe], [NamSanXuat], [MauXe], [GiaXe], [IDKhachHang]) VALUES (N'X5', N'Toyota Land Cruiser Prado', N'2024-01-01', N'Đen', N'150000', NULL)
+GO
+ALTER TABLE [dbo].[BAOHIEM]  WITH CHECK ADD  CONSTRAINT [FK_BAOHIEM_XEOTO] FOREIGN KEY([IDXe])
+REFERENCES [dbo].[XEOTO] ([IDXe])
+GO
+ALTER TABLE [dbo].[BAOHIEM] CHECK CONSTRAINT [FK_BAOHIEM_XEOTO]
+GO
+ALTER TABLE [dbo].[CUAHANG]  WITH CHECK ADD  CONSTRAINT [FK_CUAHANG_KHACHHANG] FOREIGN KEY([IDKhacHang])
+REFERENCES [dbo].[KHACHHANG] ([IDKhachHang])
+GO
+ALTER TABLE [dbo].[CUAHANG] CHECK CONSTRAINT [FK_CUAHANG_KHACHHANG]
+GO
+ALTER TABLE [dbo].[DICHVUBAOHANH]  WITH CHECK ADD  CONSTRAINT [FK_DICHVUBAOHANH_PHUTUNG] FOREIGN KEY([IDPhuTung])
+REFERENCES [dbo].[PHUTUNG] ([IDPhuTung])
+GO
+ALTER TABLE [dbo].[DICHVUBAOHANH] CHECK CONSTRAINT [FK_DICHVUBAOHANH_PHUTUNG]
+GO
+ALTER TABLE [dbo].[DICHVUBAOHANH]  WITH CHECK ADD  CONSTRAINT [FK_DICHVUBAOHANH_XEOTO] FOREIGN KEY([IDXe])
+REFERENCES [dbo].[XEOTO] ([IDXe])
+GO
+ALTER TABLE [dbo].[DICHVUBAOHANH] CHECK CONSTRAINT [FK_DICHVUBAOHANH_XEOTO]
+GO
+ALTER TABLE [dbo].[DICHVUSALE]  WITH CHECK ADD  CONSTRAINT [FK_DICHVUSALE_XEOTO] FOREIGN KEY([IDXe])
+REFERENCES [dbo].[XEOTO] ([IDXe])
+GO
+ALTER TABLE [dbo].[DICHVUSALE] CHECK CONSTRAINT [FK_DICHVUSALE_XEOTO]
+GO
+ALTER TABLE [dbo].[HOADON]  WITH CHECK ADD  CONSTRAINT [FK_HOADON_BAOHIEM] FOREIGN KEY([IDBaoHiem])
+REFERENCES [dbo].[BAOHIEM] ([IDBaoHiem])
+GO
+ALTER TABLE [dbo].[HOADON] CHECK CONSTRAINT [FK_HOADON_BAOHIEM]
+GO
+ALTER TABLE [dbo].[HOADON]  WITH CHECK ADD  CONSTRAINT [FK_HOADON_DICHVUBAOHANH] FOREIGN KEY([IDDichVuBaoHanh])
+REFERENCES [dbo].[DICHVUBAOHANH] ([IDDichVuBaoHanh])
+GO
+ALTER TABLE [dbo].[HOADON] CHECK CONSTRAINT [FK_HOADON_DICHVUBAOHANH]
+GO
+ALTER TABLE [dbo].[HOADON]  WITH CHECK ADD  CONSTRAINT [FK_HOADON_DICHVUSALE] FOREIGN KEY([IDDichVuSale])
+REFERENCES [dbo].[DICHVUSALE] ([IDDichVuSale])
+GO
+ALTER TABLE [dbo].[HOADON] CHECK CONSTRAINT [FK_HOADON_DICHVUSALE]
+GO
+ALTER TABLE [dbo].[HOADON]  WITH CHECK ADD  CONSTRAINT [FK_HOADON_XEOTO] FOREIGN KEY([IDXe])
+REFERENCES [dbo].[XEOTO] ([IDXe])
+GO
+ALTER TABLE [dbo].[HOADON] CHECK CONSTRAINT [FK_HOADON_XEOTO]
+GO
+ALTER TABLE [dbo].[KHOXE]  WITH CHECK ADD  CONSTRAINT [FK_KHOXE_XEOTO] FOREIGN KEY([IDXe])
+REFERENCES [dbo].[XEOTO] ([IDXe])
+GO
+ALTER TABLE [dbo].[KHOXE] CHECK CONSTRAINT [FK_KHOXE_XEOTO]
+GO
+ALTER TABLE [dbo].[LUONG]  WITH CHECK ADD  CONSTRAINT [FK_LUONG_NHANVIEN] FOREIGN KEY([IDNhanVien])
+REFERENCES [dbo].[NHANVIEN] ([IDNhanVien])
+GO
+ALTER TABLE [dbo].[LUONG] CHECK CONSTRAINT [FK_LUONG_NHANVIEN]
+GO
+ALTER TABLE [dbo].[LUONG]  WITH CHECK ADD  CONSTRAINT [FK_LUONG_QUANLY] FOREIGN KEY([IDQuanLy])
+REFERENCES [dbo].[QUANLY] ([IDQuanLy])
+GO
+ALTER TABLE [dbo].[LUONG] CHECK CONSTRAINT [FK_LUONG_QUANLY]
+GO
+ALTER TABLE [dbo].[NHACUNGCAP]  WITH CHECK ADD  CONSTRAINT [FK_NHACUNGCAP_PHUTUNG1] FOREIGN KEY([IDPhuTung])
+REFERENCES [dbo].[PHUTUNG] ([IDPhuTung])
+GO
+ALTER TABLE [dbo].[NHACUNGCAP] CHECK CONSTRAINT [FK_NHACUNGCAP_PHUTUNG1]
+GO
+ALTER TABLE [dbo].[NHANVIEN]  WITH CHECK ADD  CONSTRAINT [FK_NHANVIEN_CUAHANG] FOREIGN KEY([IDCuaHang])
+REFERENCES [dbo].[CUAHANG] ([IDCuaHang])
+GO
+ALTER TABLE [dbo].[NHANVIEN] CHECK CONSTRAINT [FK_NHANVIEN_CUAHANG]
+GO
+ALTER TABLE [dbo].[NHANVIEN]  WITH CHECK ADD  CONSTRAINT [FK_NHANVIEN_KHACHHANG] FOREIGN KEY([IDKhachHang])
+REFERENCES [dbo].[KHACHHANG] ([IDKhachHang])
+GO
+ALTER TABLE [dbo].[NHANVIEN] CHECK CONSTRAINT [FK_NHANVIEN_KHACHHANG]
+GO
+ALTER TABLE [dbo].[PHONGBAN]  WITH CHECK ADD  CONSTRAINT [FK_PHONGBAN_NHANVIEN] FOREIGN KEY([IDNhanVien])
+REFERENCES [dbo].[NHANVIEN] ([IDNhanVien])
+GO
+ALTER TABLE [dbo].[PHONGBAN] CHECK CONSTRAINT [FK_PHONGBAN_NHANVIEN]
+GO
+ALTER TABLE [dbo].[QUANLY]  WITH CHECK ADD  CONSTRAINT [FK_QUANLY_CUAHANG] FOREIGN KEY([IDCuaHang])
+REFERENCES [dbo].[CUAHANG] ([IDCuaHang])
+GO
+ALTER TABLE [dbo].[QUANLY] CHECK CONSTRAINT [FK_QUANLY_CUAHANG]
+GO
+ALTER TABLE [dbo].[QUANLY]  WITH CHECK ADD  CONSTRAINT [FK_QUANLY_NHANVIEN] FOREIGN KEY([IDNhanVien])
+REFERENCES [dbo].[NHANVIEN] ([IDNhanVien])
+GO
+ALTER TABLE [dbo].[QUANLY] CHECK CONSTRAINT [FK_QUANLY_NHANVIEN]
+GO
+ALTER TABLE [dbo].[XEOTO]  WITH CHECK ADD  CONSTRAINT [FK_XEOTO_KHACHHANG] FOREIGN KEY([IDKhachHang])
+REFERENCES [dbo].[KHACHHANG] ([IDKhachHang])
+GO
+ALTER TABLE [dbo].[XEOTO] CHECK CONSTRAINT [FK_XEOTO_KHACHHANG]
+GO
+ALTER TABLE [dbo].[KHACHHANG]  WITH CHECK ADD  CONSTRAINT [ck_SDTKhachHang] CHECK  (([SDTKhachHang] like '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'))
+GO
+ALTER TABLE [dbo].[KHACHHANG] CHECK CONSTRAINT [ck_SDTKhachHang]
+GO
+ALTER TABLE [dbo].[KHACHHANG]  WITH CHECK ADD  CONSTRAINT [SDTKhachHang] CHECK  (([SDTKhachHang] like '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'))
+GO
+ALTER TABLE [dbo].[KHACHHANG] CHECK CONSTRAINT [SDTKhachHang]
+GO
+ALTER TABLE [dbo].[NHACUNGCAP]  WITH CHECK ADD  CONSTRAINT [ck_SDTNhaCungCap] CHECK  (([SDTNhaCungCap] like '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'))
+GO
+ALTER TABLE [dbo].[NHACUNGCAP] CHECK CONSTRAINT [ck_SDTNhaCungCap]
+GO
+ALTER TABLE [dbo].[NHACUNGCAP]  WITH CHECK ADD  CONSTRAINT [SDTNhaCungCap] CHECK  (([SDTNhaCungCap] like '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'))
+GO
+ALTER TABLE [dbo].[NHACUNGCAP] CHECK CONSTRAINT [SDTNhaCungCap]
+GO
+ALTER TABLE [dbo].[NHANVIEN]  WITH CHECK ADD  CONSTRAINT [ck_SDTNhanVien] CHECK  (([SDTNhanVien] like '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'))
+GO
+ALTER TABLE [dbo].[NHANVIEN] CHECK CONSTRAINT [ck_SDTNhanVien]
+GO
+ALTER TABLE [dbo].[NHANVIEN]  WITH CHECK ADD  CONSTRAINT [SDTNhanVien] CHECK  (([SDTNhanVien] like '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'))
+GO
+ALTER TABLE [dbo].[NHANVIEN] CHECK CONSTRAINT [SDTNhanVien]
+GO
+/****** Object:  StoredProcedure [dbo].[DanhSachXe]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[DanhSachXe]
+AS SELECT * FROM XEOTO;
+GO
+/****** Object:  StoredProcedure [dbo].[KiemTraXe]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[KiemTraXe]
+@tenxe NVARCHAR(50)AS
+BEGIN
+IF (EXISTS (SELECT * FROM XEOTO WHERE Tenxe = @tenxe))
+Print N'Sản phẩm ' + @tenxe + N' có trong cửa hàng'
+ELSE
+Print N'Sản phẩm ' + @tenxe + N' không có trong cửa hàng'
+END
+GO
+/****** Object:  StoredProcedure [dbo].[KiemTraXeCoTonTai]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[KiemTraXeCoTonTai]
+@tenxe NVARCHAR(50)AS
+BEGIN
+IF (EXISTS (SELECT * FROM XEOTO WHERE Tenxe = @tenxe))
+Print N'Xe ' + @tenxe + N' có trong cửa hàng'
+ELSE
+Print N'Xe ' + @tenxe + N' không có trong cửa hàng'
+END
+GO
+/****** Object:  StoredProcedure [dbo].[PHIEUBANHANG]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[PHIEUBANHANG]
+@IDHoaDon NVARCHAR(50) AS
+BEGIN
+SELECT IDHoaDon as N'Mã hoá đơn',
+KHACHHANG.TenKhachHang  as N'Họ tên khách hàng',
+XEOTO.TenXe as N'Tên Xe',
+ThanhTien as N'giá',
+NgayLap as N'Ngày mua xe'
+FROM XEOTO, KHACHHANG,HOADON
+WHERE KHACHHANG.IDKhachHang = HOADON.IDKhachHang
+AND XEOTO.IDXe = HOADON.IDXe
+AND IDHoaDon = @IDHoaDon END
+GO
+/****** Object:  StoredProcedure [dbo].[ThemXeMoi]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ThemXeMoi]
+@idxe NVARCHAR(50), @tenxe NVARCHAR(50), @namsanxuat NVARCHAR(50), @mauxe NVARCHAR(50),@giaxe NVARCHAR(12),@idkhachhang NVARCHAR(50)
+AS insert dbo.XEOTO(IDXe,TenXe,NamSanXuat,MauXe,GiaXe,IDKhachHang)
+values (@idxe, @tenxe, @namsanxuat,@mauxe,@giaxe,@idkhachhang);
+GO
+/****** Object:  StoredProcedure [dbo].[ThemXeMoiVaoXEOTO]    Script Date: 4/7/2024 11:09:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ThemXeMoiVaoXEOTO]
+@idxe NVARCHAR(50), @tenxe NVARCHAR(50), @namsanxuat NVARCHAR(50), @mauxe NVARCHAR(50),@giaxe NVARCHAR(12),@idkhachhang NVARCHAR(50)
+AS insert dbo.XEOTO(IDXe,TenXe,NamSanXuat,MauXe,GiaXe,IDKhachHang)
+values (@idxe, @tenxe, @namsanxuat,@mauxe,@giaxe,@idkhachhang);
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "x"
+            Begin Extent = 
+               Top = 7
+               Left = 48
+               Bottom = 170
+               Right = 242
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "d"
+            Begin Extent = 
+               Top = 175
+               Left = 48
+               Bottom = 338
+               Right = 275
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "b"
+            Begin Extent = 
+               Top = 343
+               Left = 48
+               Bottom = 506
+               Right = 278
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'ViewCacMauXeDuocChon'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'ViewCacMauXeDuocChon'
+GO
+USE [master]
+GO
+ALTER DATABASE [CuaHangOto] SET  READ_WRITE 
+GO
